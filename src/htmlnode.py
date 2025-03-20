@@ -21,16 +21,19 @@ class HTMLNode:
         return f"HTMLNode({self.tag}, {self.value}, {self.children}, {self.props})"
 
 class LeafNode(HTMLNode):
+
+     def __init__(self, tag: str = None, value: str = None, props: dict = None):
+          super().__init__(tag, value, [], props)
     
-    def __init__(self, tag: str = None, value: str = None, props: dict = None):
-         super().__init__(tag, value, [], props)
-    
-    def to_html(self):
-         if self.value == "":
-              raise ValueError("All leaf nodes must have a value")
-         if self.tag == None:
-              return self.value
-         return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
+     def to_html(self):
+          if self.value == "":
+               raise ValueError("All leaf nodes must have a value")
+          if self.tag == None:
+               return self.value
+          return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
+
+     def __repr__(self):
+          return super().__repr__()
 
 class ParentNode(HTMLNode):
     

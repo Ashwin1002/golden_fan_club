@@ -1,13 +1,15 @@
 from enum import Enum
 
-class Bender(Enum):
-    AIR_BENDER = "air"
-    WATER_BENDER = "water"
-    EARTH_BENDER = "earth"
-    FIRE_BENDER = "fire"
+class TextType(Enum):
+    TEXT = "text"
+    BOLD = "b"
+    ITALIC = "i"
+    CODE = "code"
+    LINK = "a href"
+    IMAGE = "img src"
 
 class TextNode:
-    def __init__(self, text: str, text_type: Bender, url = None):
+    def __init__(self, text: str, text_type: TextType, url = None):
         self.text = text
         self.text_type = text_type
         self.url = url
