@@ -1,7 +1,7 @@
 import unittest
 
-from main import text_node_to_html_node, split_nodes_delimiter
 from textnode import TextNode, TextType
+from htmlhelper import extract_markdown_images, text_node_to_html_node, extract_markdown_links, split_nodes_delimiter
 
 
 class TestTextNode(unittest.TestCase):
@@ -44,6 +44,18 @@ class TestTextNode(unittest.TestCase):
         node = TextNode("This is text with a `code block` word", TextType.TEXT)
         new_nodes = split_nodes_delimiter([node], "`", TextType.CODE)
         self.assertEqual(len(new_nodes), 3)
+    
+    def test_extract_markdown_images(self):
+        matches = extract_markdown_images(
+            "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png)"
+        )
+        self.assertListEqual([("image", "https://i.imgur.com/zjjcJKZ.png")], matches)
+    
+    def test_extract_markdown_links(self):
+        matches = extract_markdown_links(
+            "This is text with a [link](https://www.boot.dev)"
+        )
+        self.assertListEqual([("link", "https://www.boot.dev")], matches)
 
 if __name__ == "__main__":
     unittest.main()
