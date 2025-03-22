@@ -1,25 +1,19 @@
 from textnode import TextNode, TextType
 
-from htmlhelper import extract_markdown_images, extract_markdown_links
+from htmlhelper import split_nodes_links, text_to_textnodes
 
 def main():
     print("hello world")
 
-    text_node_1 = TextNode("This is some anchor text", TextType.BOLD, "https://www.boot.dev")
+    node = TextNode(
+        "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)",
+        TextType.TEXT,
+    )
+    print("\n".join([str(n) for n in split_nodes_links([node])]))
 
-    print(text_node_1)
+    text = "This is **text** with an _italic_ word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
 
-    text : str = "This is text with a " \
-    "![rick roll](https://i.imgur.com/aKaOqIh.gif) and " \
-    "![obi wan](https://i.imgur.com/fJRm4Vk.jpeg) " \
-    "(hello)"
-
-    text2 = "This is text with a link " \
-    "[to boot dev](https://www.boot.dev) and " \
-    "[to youtube](https://www.youtube.com/@bootdotdev)"
-
-    print(extract_markdown_images(text))
-    print(extract_markdown_links(text2))
+    text_to_textnodes(text)
 
 if __name__ == "__main__":
     main()
