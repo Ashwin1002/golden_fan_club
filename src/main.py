@@ -1,34 +1,29 @@
-from textnode import TextNode, TextType
+import os
+import shutil
 
-from htmlhelper import split_nodes_links, text_to_textnodes
+from copystatic import copy_files_recursive
+from gencontent import generate_page
 
-from markdownhelper import markdown_to_html_node
+dir_path_static = "./static"
+dir_path_public = "./public"
+dir_path_content = "./content"
+template_path = "./template.html"
+
 
 def main():
-    print("hello world")
+    print("Deleting public directory...")
+    if os.path.exists(dir_path_public):
+        shutil.rmtree(dir_path_public)
 
-    node = TextNode(
-        "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)",
-        TextType.TEXT,
+    print("Copying static files to public directory...")
+    copy_files_recursive(dir_path_static, dir_path_public)
+
+    print("Generating page...")
+    generate_page(
+        os.path.join(dir_path_content, "index.md"),
+        template_path,
+        os.path.join(dir_path_public, "index.html"),
     )
-    print("\n".join([str(n) for n in split_nodes_links([node])]))
 
-    text = "This is **text** with an _italic_ word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
 
-    text_to_textnodes(text)
-
-    md = """
-        This is **bolded** paragraph
-        text in a p
-        tag here
-
-        This is another paragraph with _italic_ text and `code` here
-
-        """
-
-    markdowns = markdown_to_html_node(md)
-
-    print(markdowns)
-
-if __name__ == "__main__":
-    main()
+main()
