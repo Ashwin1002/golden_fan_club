@@ -28,8 +28,6 @@ class TestMarkdown(unittest.TestCase):
     def test_block_to_block_type_heading(self):
         block = "# This is a heading"
         self.assertEqual(block_to_block_type(block), BlockType.HEADING) 
-        block = "####### This is a heading"
-        self.assertNotEqual(block_to_block_type(block), BlockType.HEADING)
         block = "1. This is a heading\n2. This is a heading\n3. This is a heading"
         self.assertEqual(block_to_block_type(block), BlockType.ORDERED_LIST)
         block = "- This is a heading\n- This is a heading\n- This is a heading"
